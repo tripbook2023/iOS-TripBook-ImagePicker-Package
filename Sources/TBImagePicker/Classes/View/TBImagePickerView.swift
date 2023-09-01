@@ -7,7 +7,6 @@
 
 import UIKit
 
-@available(iOS 13.0, *)
 final class TBImagePickerView: UIView {
     private(set) lazy var photoCollectionView: UICollectionView = {
         let collectionView = UICollectionView(
@@ -20,6 +19,9 @@ final class TBImagePickerView: UIView {
     let okButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 12
+        button.setTitle("사진 선택", for: .normal)
+        button.setTitleColor(.init(r: 76, g: 69, b: 67), for: .normal)
+        button.backgroundColor = .init(r: 225, g: 220, b: 219)
         return button
     }()
     
@@ -50,9 +52,10 @@ final class TBImagePickerView: UIView {
         okButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             okButton.topAnchor.constraint(equalTo: self.photoCollectionView.bottomAnchor, constant: 14),
-            okButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 18),
-            okButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -18),
-            okButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -54)
+            okButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            okButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant:  -58),
+            okButton.widthAnchor.constraint(equalToConstant: 335),
+            okButton.heightAnchor.constraint(equalToConstant: 52)
         ])
         
     }

@@ -9,7 +9,7 @@ import UIKit
 
 final class TBPickerCell: UICollectionViewCell {
     var representedAssetIdentifier: String!
-    var indicatorButtonDidTap: (TBPickerCell) -> Void = {_ in }
+    var indicatorButtonDidTap: () -> Void = {}
     
     let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -23,8 +23,7 @@ final class TBPickerCell: UICollectionViewCell {
         let view = UIView()
         view.backgroundColor = .clear
         view.layer.borderWidth = 2
-        view.layer.borderColor = UIColor(red: 225, green: 78, blue: 22, alpha: 1).cgColor
-        view.isHidden = true
+        view.layer.borderColor = UIColor(r: 225, g: 78, b: 22).cgColor
         return view
     }()
     
@@ -63,13 +62,15 @@ final class TBPickerCell: UICollectionViewCell {
         selectionIndicator.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             selectionIndicator.topAnchor.constraint(equalTo: self.topAnchor, constant: 8),
-            selectionIndicator.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -8)
+            selectionIndicator.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -8),
+            selectionIndicator.widthAnchor.constraint(equalToConstant: 20),
+            selectionIndicator.heightAnchor.constraint(equalToConstant: 20)
         ])
     }
     
     @objc
     private func indicatorButtonAction() {
-        indicatorButtonDidTap(self)
+        indicatorButtonDidTap()
     }
 }
 
