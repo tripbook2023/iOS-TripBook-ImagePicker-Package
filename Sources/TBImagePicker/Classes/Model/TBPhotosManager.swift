@@ -10,9 +10,14 @@ import UIKit
 
 final class TBPhotosManager {
     private var fetchResult: PHFetchResult<PHAsset>?
-    private let imageManager: PHCachingImageManager = .init()
-    private let photoLibrary: PHPhotoLibrary = .shared()
+    let imageManager: PHCachingImageManager = .init()
+    let photoLibrary: PHPhotoLibrary = .shared()
     private let settings: TBPickerSettings = .shared
+    
+    var onSelection: ((_ imageManager: TBAssetManager) -> Void)?
+    var onDeSelction: ((_ imageManager: TBAssetManager) -> Void)?
+    var onFinish: ((_ imageManagers: [TBAssetManager]) -> Void)?
+    var onCancel: ((_ imageManagers: [TBAssetManager]) -> Void)?
     
     var selectedItems = [TBImageItem]() {
         didSet {
@@ -56,7 +61,12 @@ final class TBPhotosManager {
         }
     }
     
-    @available(iOS 14, *)
+    func removeAllSelectItem() -> [IndexPath] {
+        let indexPaths = selectedItems.map {  IndexPath(row: $0.index, section: 0) }
+        selectedItems = []
+        return indexPaths
+    }
+    
     func permissionCheck(_ collectionView: UICollectionView) {
         let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus(for: .readWrite)
         switch photoAuthorizationStatus {
@@ -82,9 +92,9 @@ final class TBPhotosManager {
         }
     }
     
-    func select(indexPath: IndexPath) -> TBImageItem? {
-        guard let asset = fetchResult?.object(at: indexPath.row) else { return nil }
-        return TBImageItem(
+    func select(indexPath: IndexPath) {
+        guard let asset = fetchResult?.object(at: indexPath.row) else { return }
+        let item = TBImageItem(
             index: indexPath.row,
             assetID: asset.localIdentifier,
             aseetManager: .init(
@@ -93,20 +103,20 @@ final class TBPhotosManager {
                 fetchOptions: settings.fetchOptions.options
             )
         )
+        selectedItems.append(item)
+        guard let itemManager = item.aseetManager else { return }
+        onSelection?(itemManager)
     }
     
-    @discardableResult
-    func deSelect(indexPath: IndexPath) -> TBImageItem? {
+    func deSelect(indexPath: IndexPath) {
         if let positionIndex = selectedItems.firstIndex(where: {
             $0.assetID == fetchResult?.object(at: indexPath.row).localIdentifier
         }) {
-            return selectedItems.remove(at: positionIndex)
+            let removeItem = selectedItems.remove(at: positionIndex)
+            guard let itemManager = removeItem.aseetManager else { return }
+            onDeSelction?(itemManager)
         }
-        return nil
-    }
-    
-    func itemAppend(_ item: TBImageItem) {
-        selectedItems.append(item)
+        return
     }
     
     func requestCollection() {
