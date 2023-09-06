@@ -7,7 +7,7 @@
 
 import Photos
 
-enum TBPickerSelection {
+public enum TBPickerSelection {
     case single
     case multiple(max: Int?, min: Int?)
 }
@@ -40,7 +40,7 @@ public final class TBPickerSettings {
     public let fetchOptions: TBPickerFetchOptions
     var selection: TBPickerSelection
     
-    init(
+    private init(
         fetchOptions: TBPickerFetchOptions = .init(),
         selection: TBPickerSelection = .single
     ) {
