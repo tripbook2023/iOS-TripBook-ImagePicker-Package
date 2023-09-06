@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class TBImagePickerView: UIView {
+final class TBImagePickerBaseView: UIView {
     private(set) lazy var photoCollectionView: UICollectionView = {
         let collectionView = UICollectionView(
             frame: .zero,
@@ -20,8 +20,9 @@ final class TBImagePickerView: UIView {
         let button = UIButton()
         button.layer.cornerRadius = 12
         button.setTitle("사진 선택", for: .normal)
-        button.setTitleColor(.init(r: 76, g: 69, b: 67), for: .normal)
-        button.backgroundColor = .init(r: 225, g: 220, b: 219)
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.setTitleColor(.init(r: 76, g: 69, b: 67), for: .disabled)
+        button.backgroundColor = .init(r: 225, g: 78, b: 22)
         return button
     }()
     
@@ -86,5 +87,10 @@ final class TBImagePickerView: UIView {
         
         let section = NSCollectionLayoutSection(group: group)
         return UICollectionViewCompositionalLayout(section: section)
+    }
+    
+    func setOkButtonEndabled(_ v: Bool) {
+        okButton.isEnabled = v
+        okButton.backgroundColor = v ? .init(r: 225, g: 78, b: 22) : .init(r: 225, g: 220, b: 219)
     }
 }
