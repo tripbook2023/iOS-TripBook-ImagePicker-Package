@@ -20,7 +20,7 @@ final class TBPickerViewController: UIViewController, Alertable {
         configureUI()
         photosManager.selectedAction = { [weak self] items in
             guard let self = self else { return }
-            self.mainView.setOkButtonEndabled(checkOkButtonEndabled(items: items))
+            self.mainView.setOkButtonEndabled(self.checkOkButtonEndabled(items: items))
         }
         beforeButton.addTarget(self, action: #selector(beforeButtomDidTap), for: .touchUpInside)
         mainView.photoCollectionView.dataSource = self
@@ -70,7 +70,7 @@ extension TBPickerViewController {
         view.backgroundColor = .systemBackground
         view.addSubview(mainView)
         mainView.translatesAutoresizingMaskIntoConstraints = false
-        mainView.setOkButtonEndabled(checkOkButtonEndabled(items: photosManager.selectedItems))
+        mainView.setOkButtonEndabled(self.checkOkButtonEndabled(items: photosManager.selectedItems))
         NSLayoutConstraint.activate([
             mainView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             mainView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
