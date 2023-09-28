@@ -70,7 +70,7 @@ extension TBPickerViewController {
         view.backgroundColor = .systemBackground
         view.addSubview(mainView)
         mainView.translatesAutoresizingMaskIntoConstraints = false
-        mainView.setOkButtonEndabled(checkOkButtonEndabled(items: photosManager.selectedItems))
+        mainView.setOkButtonEndabled(self.checkOkButtonEndabled(items: photosManager.selectedItems))
         NSLayoutConstraint.activate([
             mainView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             mainView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
