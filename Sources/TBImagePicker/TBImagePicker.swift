@@ -1,7 +1,7 @@
 import UIKit
 import SwiftUI
-
-final class TBImagePicker: UINavigationController {
+ 
+public final class TBImagePicker: UINavigationController {
     var setting = TBPickerSettings.shared
     
     public init(
