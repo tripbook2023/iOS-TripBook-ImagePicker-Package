@@ -56,7 +56,7 @@ final class TBPickerViewController: UIViewController, Alertable {
     @objc
     private func beforeButtomDidTap() {
         let assetManagers = photosManager.selectedImageManager
-        photosManager.onFinish?(assetManagers)
+        photosManager.onCancel?(assetManagers)
         dismiss(animated: true)
     }
 }
