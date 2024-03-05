@@ -121,9 +121,6 @@ extension TBPickerViewController: UICollectionViewDataSource {
             }
         }
         
-        let options = PHImageRequestOptions()
-        options.isNetworkAccessAllowed = true
-        
         photosManager.imageManager.requestImage(
             for: asset,
             targetSize: cell.bounds.size,
