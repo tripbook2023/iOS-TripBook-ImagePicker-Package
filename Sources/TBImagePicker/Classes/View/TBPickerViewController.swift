@@ -124,7 +124,7 @@ extension TBPickerViewController: UICollectionViewDataSource {
             contentMode: .aspectFill,
             options: nil
         ) { image, _ in
-            if cell.representedAssetIdentifier == asset.localIdentifier && image != nil {
+            if cell.representedAssetIdentifier == asset.localIdentifier {
                 cell.imageView.image = image
             }
         }

@@ -72,5 +72,11 @@ final class TBPickerCell: UICollectionViewCell {
     private func indicatorButtonAction() {
         indicatorButtonDidTap()
     }
+    
+    override func prepareForReuse() {
+        imageView.image = nil
+        representedAssetIdentifier = nil
+        indicatorButtonDidTap = {}
+    }
 }
 
