@@ -14,6 +14,8 @@ final class TBPickerViewController: UIViewController, Alertable {
     private let mainView = TBImagePickerBaseView()
     public let settings = TBPickerSettings.shared
     private let beforeButton = UIButton()
+    private let options = PHImageRequestOptions()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +28,7 @@ final class TBPickerViewController: UIViewController, Alertable {
         mainView.photoCollectionView.dataSource = self
         mainView.okButton.addTarget(self, action: #selector(okButtomDidTap), for: .touchUpInside)
         photosManager.photoLibrary.register(self)
+        options.isNetworkAccessAllowed = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -118,11 +121,14 @@ extension TBPickerViewController: UICollectionViewDataSource {
             }
         }
         
+        let options = PHImageRequestOptions()
+        options.isNetworkAccessAllowed = true
+        
         photosManager.imageManager.requestImage(
             for: asset,
             targetSize: cell.bounds.size,
             contentMode: .aspectFill,
-            options: nil
+            options: options
         ) { image, _ in
             if cell.representedAssetIdentifier == asset.localIdentifier {
                 cell.imageView.image = image
